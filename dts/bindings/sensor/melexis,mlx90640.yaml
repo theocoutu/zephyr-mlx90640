@@ -1,0 +1,63 @@
+# Description of the device
+description: Melexis MLX90640 thermal image sensor
+
+# Compatibility string that matches the one in the Devicetree source and 
+# DT_DRV_COMPAT macro in the driver source code
+compatible: "melexis,mlx90640"
+
+# Includes common definitions from other bindings files
+#  - sensor-device.yaml - common sensor properties
+#  - i2c-device.yaml - common I2C communication properties
+include: [sensor-device.yaml, i2c-device.yaml]
+
+# Defines specific Devicetree properties of the MLX90640 sensor
+properties:
+  refresh-rate:
+    type: int
+    required: false
+    default: 7
+    description: |
+      Refresh rate setting, the default is 64Hz (7).
+      (0=0.5Hz, 1=1Hz, 2=2Hz, 3=4Hz, 4=8Hz, 5=16Hz, 6=32Hz, 7=64Hz).
+    # Add an 8 enum value for no change from EEPROM default?
+    enum:
+      - 0 # 0.5Hz  0b000
+      - 1 # 1Hz    0b001
+      - 2 # 2Hz    0b010
+      - 3 # 4Hz    0b011
+      - 4 # 8Hz    0b100
+      - 5 # 16Hz   0b101
+      - 6 # 32Hz   0b110
+      - 7 # 64Hz   0b111
+    #  - 8 # nochg 0b1000
+
+  resolution:
+    type: int
+    required: false
+    default: 0
+    description: |
+      ADC resolution, the default is 16 bits/0.5°C (0).
+      (0=16bit(0.5°C), 1=17bit(0.25°C), 2=18bit(0.125°C), 19bit(0.0625°C)).
+    enum:
+      - 0 # 16 bits, 0.5°C
+      - 1 # 17 bits, 0.25°C
+      - 2 # 18 bits, 0.125°C
+      - 3 # 19 bits, 0.0625°C
+
+  mode:
+    type: int
+    required: false
+    default: 1
+    description: |
+      Measurement mode (0=interleaved, 1=chess pattern), default chess.
+    enum:
+      - 0 # interleaved
+      - 1 # chess pattern
+
+  emissivity:
+    type: float
+    required: false
+    default: 0.95
+    description: |
+      Emissivity setting (0.1-1.0). Default value is 0.95.
+      Set this to the emissivity of the object expected to be measured.

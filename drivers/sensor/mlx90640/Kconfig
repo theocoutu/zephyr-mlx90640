@@ -1,0 +1,24 @@
+# Create a new option in menuconfig
+config MLX90640
+    bool "MLX90640 Thermal Image Sensor"
+	default n  		# Set the driver to be disabled by default
+	depends on I2C && SENSOR # Make it dependent on I2C & sensor
+	help
+	  Enable driver for the Melexis MLX90640 thermal image sensor.
+	  This driver depends on the I2C subsystem being enabled.
+#	  dr
+
+
+if MLX90640
+
+# Add other Kconfig options if needed, e.g., for default emissivity if not in DT
+# config MLX90640_DEFAULT_EMISSIVITY_PERMILLI
+#    int "Default emissivity (permilli, e.g., 950 for 0.95)"
+#    default 950
+#    range 100 1000
+#    help
+#      Default emissivity value if not specified in devicetree.
+#      Value is in permilli (e.g., 950 means 0.95).
+
+
+endif # MLX90640
